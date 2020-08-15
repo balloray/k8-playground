@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+  labels:
+    name: db-rs
+  name: {{ .Values.db_image.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-rs-pod
+  template:
+    metadata:
+      labels:
+        app: db-rs-pod
+    spec:
+      containers: 
+      - image: {{ .Values.db_image.repository }}:{{ .Values.db_image.tag }}
+        name: mysql
+        env:
+          # Test, use secret in prod
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+        ports: 
+        - containerPort: 3306
+          name: msql

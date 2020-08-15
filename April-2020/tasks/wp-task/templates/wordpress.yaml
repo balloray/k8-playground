@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+  labels:
+    name: wp-rs
+  name: {{ .Chart.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: wp-rs-pod
+  template:
+    metadata:
+      labels:
+        app: wp-rs-pod
+    spec:
+      containers:
+      - image: {{ .Values.wp_image.repository }}:{{ .Values.wp_image.tag }}
+        name: wordpress
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: db-rs
+        - name: WORDPRESS_DB_PASSWORD
+          value: password
+        ports:
+        - containerPort: 80
+          name: wordpress
+

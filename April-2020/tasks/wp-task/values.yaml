@@ -1,0 +1,23 @@
+# Default values for wp-task.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 3
+
+wp_image:
+  repository: wordpress
+  tag: "php7.2-apache"
+
+
+db_image: 
+  repository: mysql
+  tag: "5.6"
+  name: my-db
+
+service: 
+  type: NodePort
+  name: wp-service
+
+ingress: 
+  name: my-wp-ingress
+  domain: example.com
